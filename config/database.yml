@@ -1,0 +1,16 @@
+common: &common
+  adapter: postgresql
+  username: emberdocs
+  host: localhost
+
+development:
+  <<: *common
+  database: emberdocs_dev
+
+test:
+  <<: *common
+  database: emberdocs_test
+
+production:
+  <<: *common
+  database: emberdocs_prod

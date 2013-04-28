@@ -1,0 +1,23 @@
+DOCTYPE html
+html
+head
+  title
+    | EmberDocs
+  = stylesheet_link_tag "application", :media => "all"
+  = javascript_include_tag "application" %>
+  = csrf_meta_tags %>
+body
+
+#user_nav
+  - if curr_member
+    = curr_member.name
+    = link_to "Log out", log_out_path
+  - else
+    = link_to "Sign up", sign_up_path 
+    = " | "
+    = link_to "Log in", log_in_path
+
+= yield
+
+  - flash.each do |name, msg|
+    = content_tag :div, msg, :id => "flash#{name}"
