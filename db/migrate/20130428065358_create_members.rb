@@ -3,8 +3,8 @@ class CreateMembers < ActiveRecord::Migration
     create_table :members do |t|
       t.string :name
       t.string :email
-      t.string :password_hash
-      t.string :password_salt
+      t.string :provider
+      t.string :uid
 
       t.timestamps
     end

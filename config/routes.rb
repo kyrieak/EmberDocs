@@ -1,12 +1,19 @@
 EmberDocs::Application.routes.draw do
+
+  get '/auth/:provider/callback', to: 'sessions#create'
+  
+  match "auth/failure" => "sessions#new"
   
   match "log_in" => "sessions#new", :as => :log_in
   match "log_out" => "sessions#destroy", :as => :log_out
   
-  match "sign_up" => "members#new", :as => :sign_up
-  root :to => "members#new"
+  match "/save_member" => "members#create", :as => :save_member
+  match "/members" => "members#index", :as => :members
+  match "/member" => "members#show", :as => :member
 
-  resources :members
+  resources :docs
+
+  root :to => "docs#index"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

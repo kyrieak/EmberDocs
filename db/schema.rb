@@ -11,15 +11,43 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130428065358) do
+ActiveRecord::Schema.define(:version => 20130430212454) do
+
+  create_table "assertions", :force => true do |t|
+    t.integer  "member_id"
+    t.string   "statement"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "docs", :force => true do |t|
+    t.string   "assertion_id"
+    t.string   "subject"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+    t.text     "content"
+  end
 
   create_table "members", :force => true do |t|
     t.string   "name"
     t.string   "email"
-    t.string   "password_hash"
-    t.string   "password_salt"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.string   "provider"
+    t.string   "uid"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "tags", :force => true do |t|
+    t.integer  "doc_id"
+    t.integer  "tagword_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "tagwords", :force => true do |t|
+    t.string   "word"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
 end

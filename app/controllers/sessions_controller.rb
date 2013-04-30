@@ -1,23 +1,26 @@
 class SessionsController < ApplicationController
+
+  
+  
   def new
+    @message = params[:message]
+    # @info = session.to_s.gsub(/[\{\}\"]/, "")
   end
   
   def create
-    member = Member.authenticate(params[:email], params[:password])
-    if member
-      session[:member_id] = member.id
-      flash[:notice] => "Logged in!"
-      redirect_to root_url
-    else
-      flash[:notice] = "Invalid email or password"
-      render "new"
-    end
+    auth = request.env["omniauth.auth"]
+
+    # uid = auth["uid"]
+    # logger.debug uid
+    # member = Member.find_by_auth({:uid => auth["uid"]})
+    cookies[:uid] = auth["uid"]
+    redirect_to root_path
   end
 
   def destroy
-    session[:member_id] = nil
+    session[:uid] = nil
     flash[:notice] = "Logged out!"
-    redirect_to root_url
+    redirect_to log_in_url
   end
 
 end

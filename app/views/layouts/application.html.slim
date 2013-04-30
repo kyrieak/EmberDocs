@@ -4,20 +4,19 @@ head
   title
     | EmberDocs
   = stylesheet_link_tag "application", :media => "all"
-  = javascript_include_tag "application" %>
-  = csrf_meta_tags %>
+  = javascript_include_tag "application"
+  = csrf_meta_tags
 body
 
 #user_nav
-  - if curr_member
-    = curr_member.name
+  - if logged_in?
+    = "Hi " << "Bobo" << " \\('u') | "
     = link_to "Log out", log_out_path
   - else
-    = link_to "Sign up", sign_up_path 
-    = " | "
-    = link_to "Log in", log_in_path
+    = link_to "Sign in with Github", "auth/github"
+    = link_to "Log out", log_out_path
 
 = yield
 
-  - flash.each do |name, msg|
-    = content_tag :div, msg, :id => "flash#{name}"
+- flash.each do |name, msg|
+  = content_tag :div, msg, :id => "flash#{name}"
