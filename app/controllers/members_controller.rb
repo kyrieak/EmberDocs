@@ -1,7 +1,5 @@
 class MembersController < ApplicationController
 
-  
-  
   def index
 
   end
@@ -16,11 +14,9 @@ class MembersController < ApplicationController
   end
   
   def create    
-    logger.debug(params)
-    @member = Member.new(params[:member])
+    
+    @member = Member.new(:uid => cookies[:uid], :name => cookies[:name])
     if @member.save
-      session[:uid] = @member.uid
-      session[:name] = @member.name
       redirect_to root_path
     else
       render "new"

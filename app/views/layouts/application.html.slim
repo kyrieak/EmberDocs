@@ -10,11 +10,15 @@ body
 
 #user_nav
   - if logged_in?
-    = "Hi " << "Bobo" << " \\('u') | "
-    = link_to "Log out", log_out_path
+    .row
+      .span4
+      .span4
+        h4
+          = "Hi " << member_name.to_s << " \\('u') | "
+          = link_to "Log out", log_out_path
+      .span4
   - else
     = link_to "Sign in with Github", "auth/github"
-    = link_to "Log out", log_out_path
 
 = yield
 

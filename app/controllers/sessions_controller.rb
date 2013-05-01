@@ -1,6 +1,4 @@
 class SessionsController < ApplicationController
-
-  
   
   def new
     @message = params[:message]
@@ -9,18 +7,35 @@ class SessionsController < ApplicationController
   
   def create
     auth = request.env["omniauth.auth"]
-
-    # uid = auth["uid"]
-    # logger.debug uid
-    # member = Member.find_by_auth({:uid => auth["uid"]})
+    member = Member.where(:uid => auth["uid"])
     cookies[:uid] = auth["uid"]
-    redirect_to root_path
+    # puts "--------------------------------------------------"
+    # puts auth["extra"]
+    # puts "--------------------------------------------------"
+    # puts auth["info"]
+    # puts "--------------------------------------------------"
+    # puts auth["extra"]["info"]
+    if member.empty?
+      cookies[:name] = get_name(auth["info"])
+      redirect_to save_member_path
+    else
+      redirect_to root_path
+    end
   end
 
   def destroy
-    session[:uid] = nil
+    cookies.delete(:uid)
+    cookies.delete(:name)
     flash[:notice] = "Logged out!"
     redirect_to log_in_url
+  end
+
+  private
+
+  def get_name(info)
+    name = info["nickname"]
+    name = info["name"] if name.nil?
+    name.nil? ? "Doc" : name
   end
 
 end
